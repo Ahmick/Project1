@@ -4,7 +4,8 @@
 void app_main(void)
 {
     while (1) {
-        sleep(3);//sleeps for 3 seconds
+        sleep(1);//sleeps for 3 seconds
         printf("Hello World\n");
+        printf("I am a ESP32-C6\n");
     }
 }
