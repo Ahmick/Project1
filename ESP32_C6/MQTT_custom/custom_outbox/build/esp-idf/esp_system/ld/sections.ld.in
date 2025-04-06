@@ -1,6 +1,6 @@
 /*
 
- * SPDX-FileCopyrightText: 2022 Espressif Systems (Shanghai) CO LTD
+ * SPDX-FileCopyrightText: 2021 Espressif Systems (Shanghai) CO LTD
 
  *
 
@@ -53,27 +53,17 @@ SECTIONS
    */
   .rtc.text :
   {
-    /* Align the start of RTC code region as per PMP granularity
-
-     * this ensures we do not overwrite the permissions for the previous
-
-     * region (ULP mem) regardless of its end alignment
-
-     */
     
  . = ALIGN(4); 
  _rtc_fast_start = ABSOLUTE(.);
-    
- . = ALIGN(4); 
- _rtc_text_start = ABSOLUTE(.);
-    *(.rtc.entry.text)
     mapping[rtc_text]
     *rtc_wake_stub*.*(.text .text.*)
     *(.rtc_text_end_test)
-    /* Align the end of RTC code region as per PMP granularity */
-    . = ALIGN(4);
+    /* Padding for possible CPU prefetch + alignment for PMS split lines */
+    . += 16;
+    . = ALIGN(512);
     _rtc_text_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_iram_seg
   /**
 
    * This section located in RTC FAST Memory area.
@@ -93,7 +83,7 @@ SECTIONS
     
  . = ALIGN(4); 
  _rtc_force_fast_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_data_seg
   /**
 
    * RTC data section holds RTC wake stub
@@ -111,7 +101,7 @@ SECTIONS
     mapping[rtc_data]
     *rtc_wake_stub*.*(.data .rodata .data.* .rodata.* .srodata.*)
     _rtc_data_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_data_location
   /* RTC bss, from any source file named rtc_wake_stub*.c */
   .rtc.bss (NOLOAD) :
   {
@@ -120,7 +110,7 @@ SECTIONS
     *rtc_wake_stub*.*(COMMON)
     mapping[rtc_bss]
     _rtc_bss_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_data_location
   /**
 
    * This section holds data that should not be initialized at power up
@@ -141,7 +131,7 @@ SECTIONS
     
  . = ALIGN(4); 
  _rtc_noinit_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_data_location
   /**
 
    * This section located in RTC SLOW Memory area.
@@ -160,7 +150,7 @@ SECTIONS
     
  . = ALIGN(4); 
  _rtc_force_slow_end = ABSOLUTE(.);
-  } > lp_ram_seg
+  } > rtc_slow_seg
   /**
 
    * This section holds RTC data that should have fixed addresses.
@@ -217,35 +207,18 @@ SECTIONS
     /* Code marked as running out of IRAM */
     _iram_text_start = ABSOLUTE(.);
     mapping[iram0_text]
-  } > sram_seg
-  /* Marks the end of IRAM code segment */
-  .iram0.text_end (NOLOAD) :
+  } > iram0_0_seg
+  /**
+
+   * This section is required to skip .iram0.text area because iram0_0_seg and
+
+   * dram0_0_seg reflect the same address space on different buses.
+
+   */
+  .dram0.dummy (NOLOAD):
   {
-    /* Align the end of code region as per PMP region granularity */
-    . = ALIGN(4);
-    
- . = ALIGN(4); 
- _iram_text_end = ABSOLUTE(.);
-  } > sram_seg
-  .iram0.data :
-  {
-    
- . = ALIGN(16); 
- _iram_data_start = ABSOLUTE(.);
-    mapping[iram0_data]
-    _iram_data_end = ABSOLUTE(.);
-  } > sram_seg
-  .iram0.bss (NOLOAD) :
-  {
-    
- . = ALIGN(16); 
- _iram_bss_start = ABSOLUTE(.);
-    mapping[iram0_bss]
-    _iram_bss_end = ABSOLUTE(.);
-    
- . = ALIGN(16); 
- _iram_end = ABSOLUTE(.);
-  } > sram_seg
+    . = ORIGIN(dram0_0_seg) + _iram_end - _iram_start;
+  } > dram0_0_seg
   .dram0.data :
   {
     _data_start = ABSOLUTE(.);
@@ -259,7 +232,7 @@ SECTIONS
     *(.jcr)
     mapping[dram0_data]
     _data_end = ABSOLUTE(.);
-  } > sram_seg
+  } > dram0_0_seg
   /**
 
    * This section holds data that should not be initialized at power up.
@@ -280,7 +253,7 @@ SECTIONS
     
  . = ALIGN(4); 
  _noinit_end = ABSOLUTE(.);
-  } > sram_seg
+  } > dram0_0_seg
   /* Shared RAM */
   .dram0.bss (NOLOAD) :
   {
@@ -298,7 +271,9 @@ SECTIONS
     
  . = ALIGN(8); 
  _bss_end = ABSOLUTE(.);
-  } > sram_seg
+  } > dram0_0_seg
+  ASSERT(((_bss_end - ORIGIN(dram0_0_seg)) <= LENGTH(dram0_0_seg)),
+         "DRAM segment data does not fit.")
   .flash.text :
   {
     _stext = .;
@@ -361,7 +336,7 @@ SECTIONS
     _flash_rodata_dummy_start = .;
     . = ALIGN(ALIGNOF(.flash.text)) + SIZEOF(.flash.text);
     /* Add alignment of MMU page size + 0x20 bytes for the mapping header. */
-    . = ALIGN(0x8000) + 0x20;
+    . = ALIGN(0x10000) + 0x20;
   } > default_rodata_seg
   .flash.appdesc : ALIGN(0x10)
   {
@@ -515,13 +490,42 @@ SECTIONS
     _rodata_reserved_end = ADDR(.flash.tbss);
     mapping[rodata_noload]
   } > default_rodata_seg
+  /* Marks the end of IRAM code segment */
+  .iram0.text_end (NOLOAD) :
+  {
+    /* Padding for possible CPU prefetch + alignment for PMS split lines */
+    . += 16;
+    . = ALIGN(512);
+    /* iram_end_test section exists for use by memprot unit tests only */
+    *(.iram_end_test)
+    _iram_text_end = ABSOLUTE(.);
+  } > iram0_0_seg
+  .iram0.data :
+  {
+    
+ . = ALIGN(16); 
+ _iram_data_start = ABSOLUTE(.);
+    mapping[iram0_data]
+    _iram_data_end = ABSOLUTE(.);
+  } > iram0_0_seg
+  .iram0.bss (NOLOAD) :
+  {
+    
+ . = ALIGN(16); 
+ _iram_bss_start = ABSOLUTE(.);
+    mapping[iram0_bss]
+    _iram_bss_end = ABSOLUTE(.);
+    
+ . = ALIGN(16); 
+ _iram_end = ABSOLUTE(.);
+  } > iram0_0_seg
   /* Marks the end of data, bss and possibly rodata */
   .dram0.heap_start (NOLOAD) :
   {
     
  . = ALIGN(16); 
  _heap_start = ABSOLUTE(.);
-  } > sram_seg
+  } > dram0_0_seg
   /* DWARF 1 */
   .debug 0 : { *(.debug) }
   .line 0 : { *(.line) }
@@ -580,3 +584,7 @@ SECTIONS
    *(.got .got.plt) /* TODO: GCC-382 */
   }
 }
+ASSERT(((_iram_end - ORIGIN(iram0_0_seg)) <= LENGTH(iram0_0_seg)),
+          "IRAM0 segment data does not fit.")
+ASSERT(((_heap_start - ORIGIN(dram0_0_seg)) <= LENGTH(dram0_0_seg)),
+          "DRAM segment data does not fit.")

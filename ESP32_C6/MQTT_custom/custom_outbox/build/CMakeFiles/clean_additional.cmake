@@ -18,7 +18,7 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "")
   "ldgen_libraries.in"
   "mqtt_tcp_custom_outbox.bin"
   "mqtt_tcp_custom_outbox.map"
-  "project_elf_src_esp32c6.c"
+  "project_elf_src_esp32c3.c"
   "x509_crt_bundle.S"
   )
 endif()

@@ -25,7 +25,7 @@
 #include "mqtt_client.h"
 #include "driver/gpio.h"
 
-#define SWITCH_GPIO 10
+#define SWITCH_GPIO 0
 
 static const char *TAG = "MQTT_EXAMPLE";
 
@@ -138,7 +138,7 @@ void app_main(void)
      */
     ESP_ERROR_CHECK(example_connect());
     esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.address.uri = CONFIG_BROKER_URL,
+        .broker.address.uri = "mqtt://homeassistant.local",
         .credentials.username = "mosquitto",
         .credentials.authentication.password= "Mosquitto",
     };
@@ -146,13 +146,6 @@ void app_main(void)
     esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
     /* The last argument may be used to pass data to the event handler, in this example mqtt_event_handler */
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
-
-    /*Let's enqueue a few messages to the outbox to see the allocations*/
-    int msg_id;
-    msg_id = esp_mqtt_client_enqueue(client, "/topic/qos1", "data_3", 0, 1, 0, true);
-    ESP_LOGI(TAG, "Enqueued msg_id=%d", msg_id);
-    msg_id = esp_mqtt_client_enqueue(client, "/topic/qos2", "QoS2 message", 0, 2, 0, true);
-    ESP_LOGI(TAG, "Enqueued msg_id=%d", msg_id);
 
     /* Now we start the client and it's possible to see the memory usage for the operations in the outbox. */
     esp_mqtt_client_start(client);
@@ -167,13 +160,13 @@ void app_main(void)
         if (gpio_get_level(SWITCH_GPIO) == 1) {
             printf("Switch is not pressed!\n");
             if (i == 0) {
-                esp_mqtt_client_publish(client, "/topic/test", "Hello from ESP32!", 0, 1, 0);
+                esp_mqtt_client_publish(client, "E_Button", "Unpressed", 0, 1, 0);
                 i = 1;
             }
         } else if (gpio_get_level(SWITCH_GPIO) == 0) {
             printf("Switch is pressed.\n");
             if (i==1) {
-                esp_mqtt_client_publish(client, "/topic/test", "Hello from ESP32!", 0, 1, 0);
+                esp_mqtt_client_publish(client, "E_Button", "Pressed", 0, 1, 0);
                 i = 0;
             }
         }

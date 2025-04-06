@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/cmake_install.cmake")
+  include("E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/cmake_install.cmake")
 endif()
 

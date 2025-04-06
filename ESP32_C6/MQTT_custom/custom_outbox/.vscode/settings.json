@@ -4,12 +4,12 @@
     "idf.toolsPathWin": "C:\\Users\\conno\\.espressif",
     "idf.pythonInstallPath": "C:\\Users\\conno\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
     "idf.customExtraVars": {
-        "IDF_TARGET": "esp32c6"
+        "IDF_TARGET": "esp32c3"
     },
     "idf.openOcdConfigs": [
-        "board/esp32c6-lpcore-builtin.cfg"
+        "board/esp32c3-builtin.cfg"
     ],
-    "idf.portWin": "COM4",
+    "idf.portWin": "COM6",
     "idf.flashType": "UART",
     "files.associations": {
         "random": "c"

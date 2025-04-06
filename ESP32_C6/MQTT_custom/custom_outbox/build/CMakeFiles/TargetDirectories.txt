@@ -214,12 +214,12 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/edit_cache.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/rebuild_cache.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/list_install_components.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/install.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/install/local.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c6/CMakeFiles/install/strip.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/edit_cache.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/rebuild_cache.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/list_install_components.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/install.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/install/local.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_system/port/soc/esp32c3/CMakeFiles/install/strip.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_common/CMakeFiles/__idf_esp_common.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_common/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_common/CMakeFiles/rebuild_cache.dir
@@ -276,12 +276,12 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/edit_cache.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/rebuild_cache.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/list_install_components.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/install.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/install/local.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c6/CMakeFiles/install/strip.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/edit_cache.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/rebuild_cache.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/list_install_components.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/install.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/install/local.dir
+E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/port/esp32c3/CMakeFiles/install/strip.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/lowpower/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/lowpower/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_hw_support/lowpower/CMakeFiles/list_install_components.dir
@@ -371,7 +371,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/nvs_flash/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/nvs_flash/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/nvs_flash/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_pcnt/CMakeFiles/__idf_esp_driver_pcnt.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_pcnt/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_pcnt/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_pcnt/CMakeFiles/list_install_components.dir
@@ -385,7 +384,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_spi/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_spi/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_spi/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_mcpwm/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_mcpwm/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_mcpwm/CMakeFiles/list_install_components.dir
@@ -425,7 +423,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdspi/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdspi/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdspi/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdio/CMakeFiles/__idf_esp_driver_sdio.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdio/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdio/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdio/CMakeFiles/list_install_components.dir
@@ -473,7 +470,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_ledc/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_ledc/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_ledc/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_parlio/CMakeFiles/__idf_esp_driver_parlio.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_parlio/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_parlio/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_parlio/CMakeFiles/list_install_components.dir
@@ -752,7 +748,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/idf_test/CMakeFiles/install.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/idf_test/CMakeFiles/install/local.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/idf_test/CMakeFiles/install/strip.dir
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/ieee802154/CMakeFiles/__idf_ieee802154.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/ieee802154/CMakeFiles/edit_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/ieee802154/CMakeFiles/rebuild_cache.dir
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/ieee802154/CMakeFiles/list_install_components.dir

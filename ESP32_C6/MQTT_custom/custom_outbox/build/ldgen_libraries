@@ -30,19 +30,15 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/app_trace/libapp_trace.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_event/libesp_event.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/nvs_flash/libnvs_flash.a
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_pcnt/libesp_driver_pcnt.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_spi/libesp_driver_spi.a
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_mcpwm/libesp_driver_mcpwm.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/sdmmc/libsdmmc.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdspi/libesp_driver_sdspi.a
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdio/libesp_driver_sdio.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_rmt/libesp_driver_rmt.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_tsens/libesp_driver_tsens.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_sdm/libesp_driver_sdm.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_i2c/libesp_driver_i2c.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_ledc/libesp_driver_ledc.a
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_parlio/libesp_driver_parlio.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_driver_usb_serial_jtag/libesp_driver_usb_serial_jtag.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/driver/libdriver.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/esp_phy/libesp_phy.a
@@ -75,7 +71,6 @@ E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/bui
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/espcoredump/libespcoredump.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/wear_levelling/libwear_levelling.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/fatfs/libfatfs.a
-E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/ieee802154/libieee802154.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/json/libjson.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/mqtt/libmqtt.a
 E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/nvs_sec_provider/libnvs_sec_provider.a
