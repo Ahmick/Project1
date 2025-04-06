@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "hello_world",
-    "project_version":    "c263621",
+    "project_version":    "b27ee47-dirty",
     "project_path":       "E:/Projects/Programming/Projects/Project1/ESP32_C6/Hello_World/hello_world",
     "idf_path":           "E:/Projects/Programming/esp-idf/v5.4/esp-idf",
     "build_dir":          "E:/Projects/Programming/Projects/Project1/ESP32_C6/Hello_World/hello_world/build",
