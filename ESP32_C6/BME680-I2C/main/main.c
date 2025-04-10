@@ -73,16 +73,6 @@ static const char *TAG = "BME680";
 #define meas_staus     0x1D   /*!< Register address of status flag register */                     //content bit new_data<7:0>
 
 
-int bitwise_add(int a, int b) {
-    while (b != 0) {
-        int carry = a & b;   // Compute carry bits
-        a = a ^ b;           // Compute sum without carry
-        b = carry << 1;      // Shift carry left to add in next iteration
-    }
-    return a;
-}
-
-
 /**
  * @brief Read a sequence of bytes from a BME680 sensor registers
  */
@@ -123,84 +113,118 @@ static void i2c_master_init(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_
     ESP_ERROR_CHECK(i2c_master_bus_add_device(*bus_handle, &dev_config, dev_handle));
 }
 
-//static temperature_calc(int16_t par_t1, int16_t par_t2, 
+static double temperature_calc(i2c_master_dev_handle_t dev_handle)
+{
+    uint32_t temp_adc, temp_temp_adc, par_t1, par_t2;
+    uint8_t par_t11, par_t12, par_t21, par_t22, par_t3, temp_adc1, temp_adc2, temp_adc3, data[2];
+    double var1, var2, var3, t_fine, temp_comp;
 
-void app_main(void)
+    //Reads necessary regsters.
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0xE9, data, 1));    
+    par_t11 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0xEA, data, 1));    
+    par_t12 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8A, data, 1));    
+    par_t21 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8B, data, 1));    
+    par_t22 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8C, data, 1));    
+    par_t3 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x22, data, 1));    
+    temp_adc1 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x23, data, 1));    
+    temp_adc2 = data[0];
+    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x24, data, 1));    
+    temp_adc3 = data[0];
+
+
+    //Debugging logs
+    ESP_LOGI(TAG, "part11 = %X", par_t11);
+    ESP_LOGI(TAG, "part12 = %X", par_t12);
+    ESP_LOGI(TAG, "part21 = %X", par_t21);
+    ESP_LOGI(TAG, "part22 = %X", par_t22);
+    ESP_LOGI(TAG, "part3 = %X", par_t3);
+    ESP_LOGI(TAG, "adc1 = %X", temp_adc1);
+    ESP_LOGI(TAG, "adc2 = %X", temp_adc2);
+    ESP_LOGI(TAG, "adc3 = %X", temp_adc3);
+
+    //Takes the 8 bit memory and turns to 16 bit data (20 bit for temp_adc)
+    par_t1 = (par_t12 << 8) | par_t11;    
+    par_t2 = (par_t22 << 8) | par_t21;   
+    temp_temp_adc = (temp_adc1 << 8) | temp_adc2;    
+    temp_adc3 = (temp_adc3 >> 4) &0x0F;    
+    temp_adc = temp_temp_adc << 4 | temp_adc3;    
+    
+    //Debuggins logs
+    ESP_LOGI(TAG, "par_t1 = %lX", par_t1);
+    ESP_LOGI(TAG, "par_t2 = %lX", par_t2);
+    ESP_LOGI(TAG, "16 bit temp_adc = %lX", temp_adc);
+    ESP_LOGI(TAG, "4 bit temp_adc3 = %X", temp_adc3);
+    ESP_LOGI(TAG, "20 bit temp_adc = %lX", temp_adc);
+
+    printf("par_t1= %lx, par_t2= %lx, par_t3= %x, temp_adc= %lx \n", par_t1, par_t2, par_t3, temp_adc);
+    
+    /* This is an alternative calculation given by datasheet.
+    var1 = ((int32_t)temp_adc >> 3) - ((int32_t)par_t1 << 1);
+    var2 = (var1 * (int32_t)par_t2) >> 11;
+    var3 = ((((var1 >> 1) * (var1 >> 1)) >> 12) * ((int32_t)par_t3 << 4)) >> 14;
+    t_fine = var2 + var3;
+    temp_comp = ((t_fine * 5) + 128) >> 8;
+    */
+    
+    var1 = (((double)temp_adc / 16384.0) - ((double)par_t1 / 1024.0)) * (double)par_t2;
+    var2 = ((((double)temp_adc / 131072.0) - ((double)par_t1 / 8192.0)) * (((double)temp_adc / 131072.0) - ((double)par_t1 / 8192.0))) * ((double)par_t3 * 16.0);
+    t_fine = var1 + var2;
+    temp_comp = t_fine / 5120.0;
+
+    return temp_comp;
+}
+
+static void measurement(i2c_master_dev_handle_t dev_handle)
 {
     int i = 1;
     uint8_t status;
     uint8_t data[2];
-    i2c_master_bus_handle_t bus_handle;
-    i2c_master_dev_handle_t dev_handle;
-    i2c_master_init(&bus_handle, &dev_handle);
-    ESP_LOGI(TAG, "I2C initialized successfully");
-
-    /* Demonstrate writing by resetting the BME680 */
     
-    ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, ctrl_meas, 0x6C )); //oversampling 4x, sleep mode
     ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, ctrl_hum, 0x3 )); //oversampling hum 4x
+    ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, ctrl_meas, 0x6C )); //oversampling 4x, sleep mode 
     ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, 0x71, 0x0 )); //gas measurment off
+    ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, config, 0x09 )); //temp filter 3x
     ESP_ERROR_CHECK(bme680_register_write_byte(dev_handle, ctrl_meas, 0x6D )); //measurment mode
+    
 
     while (i == 1)
     {
         ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x1D , data, 1));
         status = data[0];
         i = (status >> 5) & 0x01;
-        ESP_LOGI(TAG, "data[0] = %X, data[1] = %X", data[0],data[1]);
-        ESP_LOGI(TAG, "status = %X, i = %d", status,i);
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        //ESP_LOGI(TAG, "data[0] = %X, data[1] = %X", data[0],data[1]);
+        //ESP_LOGI(TAG, "status = %X, i = %d", status,i);
+        vTaskDelay(pdMS_TO_TICKS(100));
         //ESP_ERROR_CHECK(bme680_register_read(dev_handle, , data, 1));
         // = 0;
     }
+}
 
-    int32_t var1, var2, var3, t_fine, temp_comp, temp_adc, par_t1, par_t2;
-    int8_t par_t11, par_t12, par_t21, par_t22, par_t3, temp_adc1, temp_adc2, temp_adc3;
-    
+void app_main(void)
+{
+    double temp_comp;
+    i2c_master_bus_handle_t bus_handle;
+    i2c_master_dev_handle_t dev_handle;
+    i2c_master_init(&bus_handle, &dev_handle);
+    ESP_LOGI(TAG, "I2C initialized successfully");
 
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0xE9, data, 1));
-    ESP_LOGI(TAG, "part11 = %X", data[0]);
-    par_t11 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0xEA, data, 1));
-    ESP_LOGI(TAG, "part12 = %X", data[0]);
-    par_t12 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8A, data, 1));
-    ESP_LOGI(TAG, "part21 = %X", data[0]);
-    par_t21 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8B, data, 1));
-    ESP_LOGI(TAG, "part22 = %X", data[0]);
-    par_t22 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x8C, data, 1));
-    ESP_LOGI(TAG, "part3 = %X", data[0]);
-    par_t3 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x22, data, 1));
-    ESP_LOGI(TAG, "adc1 = %X", data[0]);
-    temp_adc1 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x23, data, 1));
-    ESP_LOGI(TAG, "adc2 = %X", data[0]);
-    temp_adc2 = data[0];
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x24, data, 1));
-    ESP_LOGI(TAG, "adc3 = %X", data[0]);
-    temp_adc3 = data[0];
 
-    
-    
-    
-    //par_t1 = (par_t12 << 8) | par_t11;
-    par_t1 = bitwise_add(par_t12, par_t11);
-    printf("Par_t1: %ld\n", par_t1);
-    par_t2 = bitwise_add(par_t22, par_t21);
-    temp_adc = bitwise_add(temp_adc1, temp_adc2);
-    temp_adc = bitwise_add(temp_adc, (temp_adc3 >> 4) &0x0F);
-    ESP_ERROR_CHECK(bme680_register_read(dev_handle, 0x24, data, 1));
-    ESP_LOGI(TAG, "par_t1= %ld, par_t1= %ld, temp_adc= %ld \n", par_t1, par_t2, temp_adc);
-    var1 = (((double)temp_adc / 16384.0) - ((double)par_t1 / 1024.0)) * (double)par_t2;
-    var2 = ((((double)temp_adc / 131072.0) - ((double)par_t1 / 8192.0)) * (((double)temp_adc / 131072.0) - ((double)par_t1 / 8192.0))) * ((double)par_t3 * 16.0);
-    t_fine = var1 + var2;
-    temp_comp = t_fine / 5120.0;
-    
-    printf("Temp: %ld \n", temp_comp);
+    while (1)
+    {
+        measurement(dev_handle); //Sets the BME680 to take a measurment. Stops when measurement is done.
 
+        temp_comp = temperature_calc(dev_handle); //Reads needed memory and calculates the temperature in degrees C.
+
+        printf("Temp: %f \n", temp_comp);
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
     ESP_ERROR_CHECK(i2c_master_bus_rm_device(dev_handle));
     ESP_ERROR_CHECK(i2c_del_master_bus(bus_handle));
     
