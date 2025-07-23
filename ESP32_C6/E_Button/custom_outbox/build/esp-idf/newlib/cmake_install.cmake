@@ -1,4 +1,4 @@
-# Install script for directory: E:/Projects/Programming/esp-idf/v5.4/esp-idf/components/newlib
+# Install script for directory: C:/Users/conno/esp/v5.5/esp-idf/components/newlib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/esp-idf/newlib/port/cmake_install.cmake")
+  include("C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/esp-idf/newlib/src/port/cmake_install.cmake")
 endif()
 

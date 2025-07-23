@@ -155,8 +155,16 @@ void app_main(void)
     }else if (gpio_get_level(SWITCH_GPIO) == 0){
         i = 1;
     }
-    
+
+    printf("%d", esp_mqtt_client_subscribe_single(client, "Test", 0));
+
     while (1) {
+        
+        
+
+        
+        
+        
         if (gpio_get_level(SWITCH_GPIO) == 1) {
             printf("Switch is not pressed!\n");
             if (i == 0) {

@@ -1,4 +1,4 @@
-# Install script for directory: E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/main
+# Install script for directory: C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
