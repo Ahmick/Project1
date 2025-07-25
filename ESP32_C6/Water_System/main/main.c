@@ -20,7 +20,9 @@
 
 int i = 0;
 int k = 0;
-int z = 1;
+int run_time = 0;
+TickType_t start_tick = 0;
+TaskHandle_t taskHandle = NULL;
 static const char *TAG = "MQTT_SUB";
 static const char *TAG1 = "wifi station";
 static const char *TAG2 = "DELAY_TASK";
@@ -44,55 +46,36 @@ void setup_gpio_inputs() {
 // Define the task function
 void task(void *pvParameters)
 {
-    TickType_t start_tick = 0; // xTaskGetTickCount(); //Gets the current tick and keeps it. Used to get elapsed time
-    TickType_t current_tick = 0;
-    //i = 0;
-    // Gets the current tick, prints the elapsed time and delays 1 second.
+    while (1) {
+        // Wait for trigger
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
-    while (true){
-        current_tick = xTaskGetTickCount();
-        z = (current_tick - start_tick) * portTICK_PERIOD_MS 
+        start_tick = xTaskGetTickCount();
+        run_time = k*100;
+        ESP_LOGI(TAG2, "Start time %d and Run Time %d \n", start_tick, run_time);
+        if (i == 1) {
+                gpio_set_level(GPIO_1, 1);
+                ESP_LOGI(TAG2, "GPIO1 high");
+                while ((xTaskGetTickCount() - start_tick) < run_time) {
+                vTaskDelay(pdMS_TO_TICKS(100));  // Optional pacing
+                ESP_LOGI(TAG2, "%d, %d", start_tick, run_time,xTaskGetTickCount);
+                printf("GPIO1 ON for %d seconds\n", k);
 
-        if (i == 1 && z > 0) {
-            gpio_set_level(GPIO_1, 1);
-            ESP_LOGI(TAG2, "GPIO1 high");
-            start_tick = current_tick;
-            current_tick = xTaskGetTickCount();
-            //vTaskDelay(1000 / portTICK_PERIOD_MS);
-            
-        } else if (i == 2 && z > 0) {
-            gpio_set_level(GPIO_2, 1);
-            ESP_LOGI(TAG2, "GPIO2 high");
-            start_tick = current_tick; 
-            current_tick = xTaskGetTickCount();
-            //vTaskDelay(1000 / portTICK_PERIOD_MS);
-        } else {
-            
+            }            
+            } else if (i == 2) {
+                gpio_set_level(GPIO_2, 1);
+                ESP_LOGI(TAG2, "GPIO2 high");
+                while ((xTaskGetTickCount() - start_tick) < run_time) {
+                // Your repeated logic here
+                // Example: process data, toggle GPIO, etc.
+                vTaskDelay(pdMS_TO_TICKS(100));  // Optional pacing
+                printf("GPIO2 on for %d seconds\n", k);
+            }
+        }   
             gpio_set_level(GPIO_1, 0);
             gpio_set_level(GPIO_2, 0);
-            current_tick = xTaskGetTickCount();
-            start_tick = current_tick; 
             ESP_LOGI(TAG2, "GPIO1 and 2 low");
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-            z = 1;
         }
-        }
-        
-        current_tick = xTaskGetTickCount(); 
-        uint32_t elapsed_ms = (current_tick - start_tick) * portTICK_PERIOD_MS;
-        ESP_LOGI(TAG2, "Elapsed Time: %d ms", elapsed_ms);
-        if (elapsed_ms > i*60000 && k == 1){
-            i = 0;
-            ESP_LOGI(TAG2, "Timer reset to 0 and i set to 0");
-            start_tick = 0; // xTaskGetTickCount(); //Gets the current tick and keeps it. Used to get elapsed time
-            k = 0;
-        }
-
-        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Delay 1 second
-
-    }
-
-    
 }
 
 //Sets up MQTT server
@@ -109,11 +92,10 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
     ESP_LOGD(TAG, "Event dispatched from event loop base=%s, event_id=%" PRIi32 "", base, event_id);
     esp_mqtt_event_handle_t event = event_data;
     esp_mqtt_client_handle_t client = event->client;
-    int msg_id;
     switch ((esp_mqtt_event_id_t)event_id) {
     case MQTT_EVENT_CONNECTED:
-        int msg_id = esp_mqtt_client_subscribe(client, "1", 0);
-        int msg_id = esp_mqtt_client_subscribe(client, "2", 0);
+        int msg_id_1 = esp_mqtt_client_subscribe(client, "1", 0);
+        int msg_id_2 = esp_mqtt_client_subscribe(client, "2", 0);
         ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
         break;
     case MQTT_EVENT_DISCONNECTED:
@@ -136,17 +118,26 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         ESP_LOGI(TAG, "MQTT_EVENT_DATA");
         printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
         printf("DATA=%.*s\r\n", event->data_len, event->data);
-        
+        char buf[32];
         if (strncmp(event->topic, "1", event->topic_len) == 0)
         {
+            memcpy(buf, event->data, event->data_len);
+            buf[event->data_len] = '\0';
+            k = atoi(buf);
             i = 1; //Relay 1 turn on 
-            //k = event->data; // Message sent tag
+            xTaskNotifyGive(taskHandle);
+
         }
         if (strncmp(event->topic, "2", event->topic_len) == 0)
         {
+            memcpy(buf, event->data, event->data_len);
+            buf[event->data_len] = '\0';
+            k = atoi(buf);
             i = 2; //Relay 2 identifier
-            //k = event->data; //Message sent tag
+            xTaskNotifyGive(taskHandle);
+
         }
+        
         break;
     case MQTT_EVENT_ERROR:
         ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
@@ -157,7 +148,6 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         break;
     }
 }
-
 
 //Everything below is to setup WiFi
 
@@ -293,7 +283,7 @@ void app_main(void)
         2048,              // Stack size in bytes
         NULL,              // Parameters to pass
         5,                 // Task priority
-        NULL               // Task handle
+        &taskHandle               // Task handle
     );
     printf("Debug4\n");
     printf("%d\n",i);
