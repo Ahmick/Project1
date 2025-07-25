@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/CMakeFiles/bootloader"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/CMakeFiles/bootloader.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "E:/Projects/Programming/Projects/Project1/ESP32_C6/MQTT_custom/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 

@@ -1,4 +1,4 @@
-# Install script for directory: E:/Projects/Programming/esp-idf/v5.4/esp-idf/components/heap
+# Install script for directory: C:/Users/conno/esp/v5.5/esp-idf/components/heap
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

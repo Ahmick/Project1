@@ -1,0 +1,2 @@
+source C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader/gdbinit/symbols
+source C:/GitHub/Project1/ESP32_C6/E_Button/custom_outbox/build/bootloader/gdbinit/connect
