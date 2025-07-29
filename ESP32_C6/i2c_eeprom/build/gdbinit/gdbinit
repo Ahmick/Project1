@@ -1,0 +1,2 @@
+source C:/GitHub/Project1/ESP32_C6/i2c_eeprom/build/gdbinit/symbols
+source C:/GitHub/Project1/ESP32_C6/i2c_eeprom/build/gdbinit/connect
