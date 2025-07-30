@@ -16,5 +16,8 @@
     "--query-driver=C:\\Users\\conno\\.espressif\\tools\\riscv32-esp-elf\\esp-14.2.0_20241119\\riscv32-esp-elf\\bin\\riscv32-esp-elf-gcc.exe",
     "--compile-commands-dir=c:\\GitHub\\Project1\\ESP32_C6\\i2c_eeprom\\build"
   ],
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "files.associations": {
+    "task.h": "c"
+  }
 }

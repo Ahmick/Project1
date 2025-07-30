@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "i2c_eeprom",
-    "project_version":    "3b760230-dirty",
+    "project_version":    "9678e11e-dirty",
     "project_path":       "C:/GitHub/Project1/ESP32_C6/i2c_eeprom",
     "idf_path":           "C:/Users/conno/esp/v5.5/esp-idf",
     "build_dir":          "C:/GitHub/Project1/ESP32_C6/i2c_eeprom/build",

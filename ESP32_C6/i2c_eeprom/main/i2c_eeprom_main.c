@@ -10,12 +10,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/i2c_master.h"
+#include "driver/i2c_slave.h"
 #include "i2c_eeprom.h"
 
 #define SCL_IO_PIN 6
 #define SDA_IO_PIN 5
 #define MASTER_FREQUENCY 1000000
-#define PORT_NUMBER -1
+#define PORT_NUMBER 0
 #define LENGTH 48
 
 static void disp_buf(uint8_t *buf, int len)
@@ -32,59 +33,45 @@ static void disp_buf(uint8_t *buf, int len)
 
 void app_main(void)
 {
+    vTaskDelay(30);
+    esp_err_t err;
+    int j = 0;
+    int i = 0;
     i2c_master_bus_config_t i2c_bus_config = {
         .clk_source = I2C_CLK_SRC_DEFAULT,
         .i2c_port = PORT_NUMBER,
         .scl_io_num = SCL_IO_PIN,
         .sda_io_num = SDA_IO_PIN,
         .glitch_ignore_cnt = 7,
+        .flags.enable_internal_pullup = true,
     };
     i2c_master_bus_handle_t bus_handle;
+    for (i=0; i < 127; i++){
+        i2c_device_config_t dev_cfg = {
+            .dev_addr_length = I2C_ADDR_BIT_LEN_7,
+            .device_address = i,
+            .scl_speed_hz = 100000,
+            };
+        
+            printf("%02x ", i);
+        
+        if (j == 7 ){
+            printf("\n");
+            j = 0;
+        }else{
+            j++;
+        }
+        
 
-    ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_bus_config, &bus_handle));
+        ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_bus_config, &bus_handle));
+        err = i2c_master_probe(bus_handle, i, -1);
 
-    i2c_eeprom_config_t eeprom_config = {
-        .eeprom_device.scl_speed_hz = MASTER_FREQUENCY,
-        .eeprom_device.device_address = 0x52,
-        .addr_wordlen = 8,
-        .write_time_ms = 10,
-    };
-
-    i2c_eeprom_handle_t eeprom_handle;
-
-    uint32_t block_addr = 0x00C0;
-    uint8_t buf[LENGTH];
-    for (int i = 0; i < LENGTH; i++) {
-        buf[i] = i;
-    }
-    uint8_t read_buf[LENGTH];
-    ESP_ERROR_CHECK(i2c_eeprom_init(bus_handle, &eeprom_config, &eeprom_handle));
-
-    while (1) {
-        //ESP_ERROR_CHECK(i2c_eeprom_write(eeprom_handle, block_addr, buf, LENGTH));
-        // Needs wait for eeprom hardware done, referring from datasheet
-        //i2c_eeprom_wait_idle(eeprom_handle);
-
-        ESP_ERROR_CHECK(i2c_eeprom_read(eeprom_handle, block_addr, read_buf, LENGTH));
-        disp_buf(read_buf, LENGTH);
-        vTaskDelay(50);
-        block_addr = 0x00C1;
-
-        ESP_ERROR_CHECK(i2c_eeprom_read(eeprom_handle, block_addr, read_buf, LENGTH));
-        disp_buf(read_buf, LENGTH);
-        vTaskDelay(50);
-        block_addr = 0x00C2;
-
-        ESP_ERROR_CHECK(i2c_eeprom_read(eeprom_handle, block_addr, read_buf, LENGTH));
-        disp_buf(read_buf, LENGTH);
-        vTaskDelay(50);
-        block_addr = 0x0051;
-
-        ESP_ERROR_CHECK(i2c_eeprom_read(eeprom_handle, block_addr, read_buf, LENGTH));
-        disp_buf(read_buf, LENGTH);
-        vTaskDelay(50);
-        block_addr = 0x0061;
-
-        vTaskDelay(5000);
-    }
+        if (err != ESP_ERR_NOT_FOUND){
+            ESP_ERROR_CHECK(i2c_master_probe(bus_handle, i, -1));
+            printf("\n \n Address %02x has device... \n", i);
+            //i = 127;
+        }
+        ESP_ERROR_CHECK(i2c_del_master_bus(bus_handle));
+        vTaskDelay(pdMS_TO_TICKS(20));
+        }
 }
