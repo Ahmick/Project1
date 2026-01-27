@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h> 
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -15,8 +16,8 @@
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
-#define WIFI_SSID   "COGECO-9E02B8"
-#define WIFI_PASS   "ktyut2m2"
+#define WIFI_SSID   "COGECO-ABD4F8"
+#define WIFI_PASS   "kdmmnwn2"
 
 
 
@@ -34,8 +35,6 @@ static const char *TAG = "MQTT_SUB";
 static const char *TAG1 = "wifi station";
 static const char *TAG2 = "DELAY_TASK";
 static const char *TAG3 = "BME280";
-static const char *dry_box = "Dry Box";
-const char *message = "00.0,00.0";
 static i2c_bus_handle_t i2c_bus = NULL;
 static bme280_handle_t bme280 = NULL;
 int i = 0;
@@ -74,7 +73,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         break;
     case MQTT_EVENT_PUBLISHED:
         ESP_LOGI(TAG, "MQTT_EVENT_PUBLISHED, msg_id=%d", event->msg_id);
-        printf("Published/n");
+        printf("Published\n");
         break;
     
     //Prints event data. If data  "1 or 2" sets i to 1 or 2. 
@@ -212,9 +211,18 @@ void wifi_init_sta(void)
     }
 }
 
+void build_message(char *out_buf, size_t out_sz, float a, float b, float c)
+{
+    printf("build_message");
+    snprintf(out_buf, out_sz, "%02.1f,%02.1f,%04.0f", a, b, c);
+}
+
 
 void app_main(void)
 {
+    char message[16];
+    float temperature = 0.0, humidity = 0.0, pressure = 0.0;
+
     //Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -264,18 +272,18 @@ void app_main(void)
         
     while (1){
         ESP_ERROR_CHECK(bme280_take_forced_measurement(bme280));
-        float temperature = 0.0, humidity = 0.0, pressure = 0.0;
         bme280_read_temperature(bme280, &temperature);
         bme280_read_humidity(bme280, &humidity);
         bme280_read_pressure(bme280, &pressure);
         if (temperature!=0.0){
             ESP_LOGI(TAG3, "Temp: %.2f, Hum: %.2f, Pres: %.0f", temperature, humidity, pressure);
-            
-            esp_mqtt_client_publish(client, dry_box, message, strlen(message),2,0);
+
+            build_message(message, 16, temperature, humidity, pressure);
+            esp_mqtt_client_publish(client, "Dry Box", message, strlen(message),2,0);
         }
 
         
 
-        vTaskDelay(pdMS_TO_TICKS(3000));
+        vTaskDelay(pdMS_TO_TICKS(30000));
         }
 }
